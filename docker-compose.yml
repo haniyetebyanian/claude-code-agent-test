@@ -23,7 +23,7 @@ services:
     working_dir: /workspace
     stdin_open: true
     tty: true
-    command: ["sh"]
+    command: ["sh", "-lc", "cd backend && npm run dev"]
     volumes:
       - ./:/workspace
     ports:
