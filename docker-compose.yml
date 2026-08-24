@@ -1,16 +1,16 @@
 services:
   database:
     image: postgres:16-alpine
-    container_name: agent-test-database
+    container_name: claude-agent-database
     restart: unless-stopped
     environment:
       POSTGRES_DB: agent_test
       POSTGRES_USER: agent_user
       POSTGRES_PASSWORD: agent_password
     ports:
-      - "5433:5432"
+      - "5434:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - claude_postgres_data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U agent_user -d agent_test"]
       interval: 5s
@@ -19,31 +19,30 @@ services:
 
   node-backend:
     image: node:22-alpine
-    container_name: agent-test-backend
+    container_name: claude-agent-backend
     working_dir: /workspace
     stdin_open: true
     tty: true
-    command: ["sh", "-lc", "cd backend && npm run dev"]
+    command: ["sh", "-lc", "cd backend && npm install && npm run dev"]
     volumes:
       - ./:/workspace
     ports:
-      - "8001:8000"
+      - "8002:8000"
     depends_on:
       database:
         condition: service_healthy
 
   node-frontend:
     image: node:22-alpine
-    container_name: agent-test-frontend
+    container_name: claude-agent-frontend
     working_dir: /workspace
     stdin_open: true
     tty: true
-    command: ["sh", "-lc", "cd frontend && npm run dev -- --host 0.0.0.0"]
+    command: ["sh", "-lc", "cd frontend && npm install && npm run dev -- --host 0.0.0.0"]
+    ports:
+      - "5174:5173"
     volumes:
       - ./:/workspace
-    ports:
-      - "5173:5173"
 
 volumes:
-  postgres_data:
-
+  claude_postgres_data:
