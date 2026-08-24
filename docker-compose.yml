@@ -23,7 +23,7 @@ services:
     working_dir: /workspace
     stdin_open: true
     tty: true
-    command: ["sh"]
+    command: ["sh", "-lc", "cd backend && npm run dev"]
     volumes:
       - ./:/workspace
     ports:
@@ -38,7 +38,7 @@ services:
     working_dir: /workspace
     stdin_open: true
     tty: true
-    command: ["sh"]
+    command: ["sh", "-lc", "cd frontend && npm run dev -- --host 0.0.0.0"]
     volumes:
       - ./:/workspace
     ports:
@@ -46,3 +46,4 @@ services:
 
 volumes:
   postgres_data:
+
