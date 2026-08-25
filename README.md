@@ -209,16 +209,4 @@ The project can be used as a starting point for further experiments involving:
 - Software development process automation
 - Comparative evaluation of AI coding tools
 
-## License
 
-Add the appropriate license for your project.
-
-For example:
-
-```text
-MIT License
-```
-
-## Status
-
-This repository is an experimental benchmark and is intended for evaluation and research purposes.
